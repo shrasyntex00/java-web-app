@@ -3,12 +3,12 @@
 apiVersion: apps/v1 
 kind: ReplicaSet
 metadata:
-  name: pythonrs
+  name: javars
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: pythonrs
+      app: javars
     matchExpressions: # Set Based
     - key: app
       operators: not in 
@@ -17,13 +17,13 @@ spec:
       - python
   template: #Pod Template
     metadata:
-      name: pythonappod
+      name: javapod
       labels:
-        app: pythonapp
+        app: javaapp
     spec:
       containers:
-      - name: pythonapp
-        image: dockerhandson/python-app:1
+      - name: javaapp
+        image: account1996/dockerwebapp:1
         ports:
         - containerPort: 4000
 
@@ -41,14 +41,3 @@ spec:
   - port: 80
     targetPort: 6000
     nodeport: 31666
-
-
-<html>
-<head>
-  <title> This is app view to show it's working</title>
-</head>
-
-<body>
-  <h1> this is body check </h1>
-</body>
-</html>
