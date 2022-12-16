@@ -1,35 +1,38 @@
----
-apiVersion: v1
-kind: ReplicationController
+#---
+apiVersion: apps/v1
+kind: Deployment
 metadata:
+  name: javaapp
+  namespace: test-ns
   labels:
-    name: javawebapp
-  name: java-controller
+    app: nginx
 spec:
-  replicas: 1
+  replicas: 2
+  selector:
+    matchLabels:
+      app: demo
   template:
     metadata:
       labels:
-        name: javawebapp
+        app: demo
     spec:
       containers:
-      - image: dockerhandson/java-web-app
-        name: javawebapp
+      - name: java
+        image: account1996/java:1
         ports:
-        - name: javawebapp
-          containerPort: 8080  
+        - containerPort: 80  
 ---
 # Node Port Service
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    name: javawebapp
-  name: javawebapp
-spec:
-  type: NodePort
-  ports:
-    - port: 8080
-      targetPort: 8080
-  selector:
-    name: javawebapp
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  labels:
+#    name: javawebapp
+#  name: javawebapp
+#spec:
+#  type: NodePort
+#  ports:
+#    - port: 8080
+#      targetPort: 8080
+#  selector:
+#    name: javawebapp
