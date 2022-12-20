@@ -18,19 +18,19 @@ spec:
         image: account1996/java:1
         imagePullPolicy: Always
         ports:
-        - containerPort: 8085
+        - containerPort: 8080
 # service type loadbalancer
-#---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: java-app-svc
-#   namespace: test-ns
-# spec:
-#   selector:
-#     app: java-app
-#   ports:
-#     - protocol: TCP
-#       port: 8085
-#       targetPort: 8085
-#   type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-app-svc
+  namespace: test-ns
+spec:
+  selector:
+    app: java-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
