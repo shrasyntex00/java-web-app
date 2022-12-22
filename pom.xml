@@ -7,7 +7,7 @@
 	<packaging>war</packaging>
 	<version>1.0</version>
 	
-	<name>java-web-app-docker</name>
+	<name>java-web-app</name>
 	<url>http://mithuntechnologies.com</url>
 	
 	<description>Maven Web Project</description>
