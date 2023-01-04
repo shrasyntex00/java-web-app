@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: my-java-app
-        image: account1996/java:1
+        image: 803561623563.dkr.ecr.ap-south-1.amazonaws.com/ecrpipeline:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
