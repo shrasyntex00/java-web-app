@@ -1,40 +1,106 @@
-node{
-     
-    stage('SCM Checkout'){
-        git url: 'https://github.com/MithunTechnologiesDevOps/java-web-app-docker.git',branch: 'master'
+pipeline {
+  agent any
+    environment {
+       AWS_ACCOUNT_ID= "803561623563"
+       AWS_DEFAULT_REGION="ap-south-1"
+       IMAGE_REPO_NAME= "ecrpipeline"
+       IMAGE_TAG= "latest"
+       REPOSITORY_URI= "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
     }
     
-    stage(" Maven Clean Package"){
-      def mavenHome =  tool name: "Maven-3.5.6", type: "maven"
-      def mavenCMD = "${mavenHome}/bin/mvn"
-      sh "${mavenCMD} clean package"
-      
-    } 
-    
-    
-    stage('Build Docker Image'){
-        sh 'docker build -t dockerhandson/java-web-app .'
-    }
-    
-    stage('Push Docker Image'){
-        withCredentials([string(credentialsId: 'Docker_Hub_Pwd', variable: 'Docker_Hub_Pwd')]) {
-          sh "docker login -u dockerhandson -p ${Docker_Hub_Pwd}"
+    stages {
+        stage('SCM Checkout') {
+            steps {
+                git 'https://github.com/shrasyntex00/java-web-app.git'
+            } 
         }
-        sh 'docker push dockerhandson/java-web-app'
-     }
-     
-      stage('Run Docker Image In Dev Server'){
         
-        def dockerRun = ' docker run  -d -p 8080:8080 --name java-web-app dockerhandson/java-web-app'
-         
-         sshagent(['DOCKER_SERVER']) {
-          sh 'ssh -o StrictHostKeyChecking=no ubuntu@172.31.20.72 docker stop java-web-app || true'
-          sh 'ssh  ubuntu@172.31.20.72 docker rm java-web-app || true'
-          sh 'ssh  ubuntu@172.31.20.72 docker rmi -f  $(docker images -q) || true'
-          sh "ssh  ubuntu@172.31.20.72 ${dockerRun}"
-       }
-       
+        // stage('Unit Testing') {
+        //     steps {
+        //       sh 'mvn test'
+        //     }
+        // }
+        
+        // stage('Integration Testing'){
+        //     steps {
+        //         sh 'mvn verify -DskipUnitTests'
+        //     }
+        // }
+        
+        stage('Build') {
+            steps {
+              sh 'mvn clean package'
+            }
+        }
+        
+        // stage('SonarQube Analysis'){
+        //     steps {
+        //             withSonarQubeEnv(installationName: 'sonarqubeserver') {
+        //               sh 'mvn clean package sonar:sonar'
+        //             }  
+                
+        //     }
+        // }
+        
+        // stage('Quality Gate Analysis'){
+        //     steps{
+        //             waitForQualityGate abortPipeline: true 
+        //     }
+        // }
+        
+        // stage('push nexus artifact'){
+        //     steps {
+        //         sh 'mvn clean deploy'
+        //     }
+        // }
+        
+        // stage('deploy to tomcat') {
+        //     steps {
+        //       deploy adapters: [tomcat9(credentialsId: 'cefc1c4e-fdf9-4f16-921d-c6cfe67330af', path: '', url: 'http://13.232.95.30:8082/')], contextPath: null, war: '**/*.war'
+        //     }
+        // }
+        
+        // stage('build docker image') {
+        //     steps {
+        //         script{
+        //             dockerImage = docker.build "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+        //         }
+        //     }
+        // }
+        
+        stage('Loggingto AWS ECR') {
+            steps {
+                sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 803561623563.dkr.ecr.ap-south-1.amazonaws.com"
+            }
+        }
+        
+      stage('Pushingto ECR') {
+          steps{
+               sh "docker build -t ecrpipeline ."
+               sh "docker tag ecrpipeline:latest 803561623563.dkr.ecr.ap-south-1.amazonaws.com/ecrpipeline:latest"
+               sh "docker push 803561623563.dkr.ecr.ap-south-1.amazonaws.com/ecrpipeline:latest"
+            }
+        }
+        
+        // stage('DockerHUB LOGIN & push image') {
+        //     steps {
+        //         withCredentials([string(credentialsId: 'dockerhub-credentials', variable: 'dockerhubcredentials')]) {
+        //             sh "docker login -u account1996 -p ${dockerhubcredentials}"  
+        //         }
+        //             sh 'docker push account1996/java:1'
+      	 //   }
+        // }
+        
+        stage('K8S Deploy'){
+            steps{
+                // kubernetesDeploy(
+                //   config: 'java-web-app-docker/javawebapp-deployment.yml',
+                //   kubeconfigId:'K8S',
+                //   enableConfigSubstitution: true
+                // )
+                
+              sh 'kubectl apply -f javawebapp-deployment.yml'
+            }
+        }
     }
-     
-     
 }
