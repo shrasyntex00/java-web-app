@@ -57,14 +57,14 @@ pipeline {
               }
             }
         
-        // stage('SonarQube Analysis'){
-        //     steps {
-        //             withSonarQubeEnv(installationName: 'sonarqubeserver') {
-        //               sh 'mvn clean package sonar:sonar'
-        //             }  
+        stage('SonarQube Analysis'){
+            steps {
+                    withSonarQubeEnv(installationName: 'sonarqubeserver') {
+                      sh 'mvn clean package sonar:sonar'
+                    }  
                 
-        //     }
-        // }
+            }
+        }
         
         // stage('Quality Gate Analysis'){
         //     steps{
