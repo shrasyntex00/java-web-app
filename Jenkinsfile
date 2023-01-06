@@ -33,29 +33,29 @@ pipeline {
             }
         }
 
-        stage('Upload war to Nexus'){
-            steps{
+        // stage('Upload war to Nexus'){
+        //     steps{
 
-                script{                                       
-                    def readPomVersion = readMavenPom file: 'pom.xml'
-                    def nexusRepo = readPomVersion.version.endsWith("SNAPSHOT") ? "skan-snapshot" : "skanjob"
-                    nexusArtifactUploader artifacts: 
-                        [[artifactId: 'java-web-app',
-                          classifier: '',
-                          file: 'target/java-web-app-1.0.war', 
-                          type: 'war']], 
+        //         script{                                       
+        //             def readPomVersion = readMavenPom file: 'pom.xml'
+        //             def nexusRepo = readPomVersion.version.endsWith("SNAPSHOT") ? "skan-snapshot" : "skanjob"
+        //             nexusArtifactUploader artifacts: 
+        //                 [[artifactId: 'java-web-app',
+        //                   classifier: '',
+        //                   file: 'target/java-web-app-1.0.war', 
+        //                   type: 'war']], 
 
-                        credentialsId: 'Nexuscred', 
-                        groupId: 'com.mt',
-                        nexusUrl: '13.40.36.65:8081', 
-                        nexusVersion: 'nexus3',
-                        protocol: 'http',
-                        repository: 'nexusRepo', 
-                        version: "${readPomVersion.version}"
+        //                 credentialsId: 'Nexuscred', 
+        //                 groupId: 'com.mt',
+        //                 nexusUrl: '13.40.36.65:8081', 
+        //                 nexusVersion: 'nexus3',
+        //                 protocol: 'http',
+        //                 repository: 'nexusRepo', 
+        //                 version: "${readPomVersion.version}"
 
-                }
-              }
-            }
+        //         }
+        //       }
+        //     }
         
         stage('SonarQube Analysis'){
             steps {
