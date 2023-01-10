@@ -36,13 +36,16 @@ pipeline {
         stage('Upload war to Nexus'){
             steps {
                 script{                                       
-                    def readPomVersion = readMavenPom file: 'pom.xml'
+                    // def readPomVersion = readMavenPom file: 'pom.xml'
                     // def nexusRepo = readPomVersion.version.endsWith("SNAPSHOT") ? "skan-snapshot" : "skanjob"
-                    nexusArtifactUploader artifacts: 
-                        [[artifactId: 'java-web-app',
-                          classifier: '',
-                          file: "target/java-web-app-$(mavenPom.version).war", 
-                          type: 'war']], 
+                    nexusArtifactUploader artifacts: [
+                          [
+                            artifactId: 'java-web-app',
+                            classifier: '',
+                            file: "target/java-web-app-1.0.0.war", 
+                            type: 'war'
+                          ]
+                        ], 
 
                         credentialsId: 'Nexuscred', 
                         groupId: 'com.mt',
@@ -50,7 +53,7 @@ pipeline {
                         nexusVersion: 'nexus3',
                         protocol: 'http',
                         repository: 'http://65.2.130.183:8081/repository/test-release/', 
-                        version: "${mavenPom.version}"
+                        version: "1.0.0"
 
                 }
               }
