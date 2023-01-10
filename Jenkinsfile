@@ -49,10 +49,10 @@ pipeline {
 
                         credentialsId: 'Nexuscred', 
                         groupId: 'com.mt',
-                        nexusUrl: 'http://65.2.130.183:8081', 
+                        nexusUrl: 'http://65.2.130.183:8081/', 
                         nexusVersion: 'nexus3',
                         protocol: 'http',
-                        repository: 'http://65.2.130.183:8081/repository/test-release/', 
+                        repository: 'repository/test-release', 
                         version: "1.0"
 
                 }
