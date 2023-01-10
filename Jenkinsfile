@@ -34,8 +34,7 @@ pipeline {
         }
 
         stage('Upload war to Nexus'){
-            steps{
-
+            steps {
                 script{                                       
                     def readPomVersion = readMavenPom file: 'pom.xml'
                     def nexusRepo = readPomVersion.version.endsWith("SNAPSHOT") ? "skan-snapshot" : "skanjob"
@@ -50,7 +49,7 @@ pipeline {
                         nexusUrl: '13.40.36.65:8081', 
                         nexusVersion: 'nexus3',
                         protocol: 'http',
-                        repository: 'nexusRepo', 
+                        repository: 'http://65.2.130.183:8081/repository/test-release/', 
                         version: "${readPomVersion.version}"
 
                 }
@@ -128,3 +127,4 @@ pipeline {
         // }
     }
 }
+ 

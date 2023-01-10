@@ -100,13 +100,13 @@
 	<distributionManagement>
 	    <repository>
 	      <id>nexus</id>
-	      <name>demo Releases Nexus Repository</name>
-	      <url>http://43.205.94.59:8081/repository/test-release/</url>
+	      <name>java-web-app</name>
+	      <url>http://65.2.130.183:8081/repository/test-release/</url>
 	    </repository>
 	    <snapshotRepository>
 	      <id>nexus</id>
-	      <name>Mithun Technologies Snapshot Nexus Repository </name>
-	      <url>http://43.205.94.59:8081/repository/test-snapshot/</url>
+	      <name>java-web-app</name>
+	      <url>http://65.2.130.183:8081/repository/test-snapshot/</url>
 	    </snapshotRepository>
 	</distributionManagement>
 	
