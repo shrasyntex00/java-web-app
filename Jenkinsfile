@@ -37,11 +37,11 @@ pipeline {
             steps {
                 script{                                       
                     def readPomVersion = readMavenPom file: 'pom.xml'
-                    def nexusRepo = readPomVersion.version.endsWith("SNAPSHOT") ? "skan-snapshot" : "skanjob"
+                    // def nexusRepo = readPomVersion.version.endsWith("SNAPSHOT") ? "skan-snapshot" : "skanjob"
                     nexusArtifactUploader artifacts: 
                         [[artifactId: 'java-web-app',
                           classifier: '',
-                          file: 'target/java-web-app-1.0.war', 
+                          file: "target/java-web-app-$(mavenPom.version).war", 
                           type: 'war']], 
 
                         credentialsId: 'Nexuscred', 
