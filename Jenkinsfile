@@ -33,38 +33,38 @@ pipeline {
             }
         }
 
-        // stage('Upload war to Nexus'){
-        //     steps{
+        stage('Upload war to Nexus'){
+            steps{
 
-        //         script{                                       
-        //             def readPomVersion = readMavenPom file: 'pom.xml'
-        //             def nexusRepo = readPomVersion.version.endsWith("SNAPSHOT") ? "skan-snapshot" : "skanjob"
-        //             nexusArtifactUploader artifacts: 
-        //                 [[artifactId: 'java-web-app',
-        //                   classifier: '',
-        //                   file: 'target/java-web-app-1.0.war', 
-        //                   type: 'war']], 
+                script{                                       
+                    def readPomVersion = readMavenPom file: 'pom.xml'
+                    def nexusRepo = readPomVersion.version.endsWith("SNAPSHOT") ? "skan-snapshot" : "skanjob"
+                    nexusArtifactUploader artifacts: 
+                        [[artifactId: 'java-web-app',
+                          classifier: '',
+                          file: 'target/java-web-app-1.0.war', 
+                          type: 'war']], 
 
-        //                 credentialsId: 'Nexuscred', 
-        //                 groupId: 'com.mt',
-        //                 nexusUrl: '13.40.36.65:8081', 
-        //                 nexusVersion: 'nexus3',
-        //                 protocol: 'http',
-        //                 repository: 'nexusRepo', 
-        //                 version: "${readPomVersion.version}"
+                        credentialsId: 'Nexuscred', 
+                        groupId: 'com.mt',
+                        nexusUrl: '13.40.36.65:8081', 
+                        nexusVersion: 'nexus3',
+                        protocol: 'http',
+                        repository: 'nexusRepo', 
+                        version: "${readPomVersion.version}"
 
-        //         }
-        //       }
-        // }
-        
-        stage('SonarQube Analysis'){
-            steps {
-                    withSonarQubeEnv(installationName: 'sonarqubeserver') {
-                      sh 'mvn clean package sonar:sonar'
-                    }  
-                
-            }
+                }
+              }
         }
+        
+        // stage('SonarQube Analysis'){
+        //     steps {
+        //             withSonarQubeEnv(installationName: 'sonarqubeserver') {
+        //               sh 'mvn clean package sonar:sonar'
+        //             }  
+                
+        //     }
+        // }
         
         // stage('Quality Gate Analysis'){
         //     steps{
@@ -91,28 +91,28 @@ pipeline {
         //         }
         //     }
         // }
-        
-        stage('Loggingto AWS ECR') {
-            steps {
-                sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 803561623563.dkr.ecr.ap-south-1.amazonaws.com"
-            }
-        }
-        
-      stage('Pushingto ECR') {
-          steps{
-               sh "docker build -t ecrpipeline ."
-               sh "docker tag ecrpipeline:latest 803561623563.dkr.ecr.ap-south-1.amazonaws.com/ecrpipeline:latest"
-               sh "docker push 803561623563.dkr.ecr.ap-south-1.amazonaws.com/ecrpipeline:latest"
-            }
-        }
-        
+
         // stage('DockerHUB LOGIN & push image') {
         //     steps {
         //         withCredentials([string(credentialsId: 'dockerhub-credentials', variable: 'dockerhubcredentials')]) {
         //             sh "docker login -u account1996 -p ${dockerhubcredentials}"  
         //         }
         //             sh 'docker push account1996/java:1'
-      	 //   }
+      	//   }
+        // }
+        
+        // stage('Loggingto AWS ECR') {
+        //     steps {
+        //         sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 803561623563.dkr.ecr.ap-south-1.amazonaws.com"
+        //     }
+        // }
+        
+        // stage('Pushingto ECR') {
+        //   steps{
+        //        sh "docker build -t ecrpipeline ."
+        //        sh "docker tag ecrpipeline:latest 803561623563.dkr.ecr.ap-south-1.amazonaws.com/ecrpipeline:latest"
+        //        sh "docker push 803561623563.dkr.ecr.ap-south-1.amazonaws.com/ecrpipeline:latest"
+        //     }
         // }
         
         stage('K8S Deploy'){
