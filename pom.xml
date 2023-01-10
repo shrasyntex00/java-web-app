@@ -6,7 +6,6 @@
 	<artifactId>java-web-app</artifactId>
 	<packaging>war</packaging>
 	<version>1.0</version>
-	
 	<name>java-web-app</name>
 	<url>http://mithuntechnologies.com</url>
 	
