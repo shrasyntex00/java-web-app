@@ -46,11 +46,11 @@ pipeline {
 
                         credentialsId: 'Nexuscred', 
                         groupId: 'com.mt',
-                        nexusUrl: '13.40.36.65:8081', 
+                        nexusUrl: 'http://65.2.130.183:8081', 
                         nexusVersion: 'nexus3',
                         protocol: 'http',
                         repository: 'http://65.2.130.183:8081/repository/test-release/', 
-                        version: "${readPomVersion.version}"
+                        version: "${mavenPom.version}"
 
                 }
               }
