@@ -42,7 +42,7 @@ pipeline {
                           [
                             artifactId: 'java-web-app',
                             classifier: '',
-                            file: "target/java-web-app-2.0.0.war", 
+                            file: "target/java-web-app-${readPomVersion.version}.war", 
                             type: 'war'
                           ]
                         ], 
