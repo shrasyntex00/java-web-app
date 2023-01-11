@@ -46,6 +46,7 @@ pipeline {
                             type: 'war'
                           ]
                         ], 
+
                         credentialsId: 'Nexuscred', 
                         groupId: 'com.mt',
                         nexusUrl: '65.2.130.183:8081/', 
@@ -54,7 +55,7 @@ pipeline {
                         repository: 'test-release', 
                         version: "${mavenPom.version}"
                 }
-              }
+            }
         }
         
         // stage('SonarQube Analysis'){
