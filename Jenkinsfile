@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script{                                       
                     def readPomVersion = readMavenPom file: 'pom.xml'
-                    // def nexusRepo = readPomVersion.version.endsWith("SNAPSHOT") ? "skan-snapshot" : "skanjob"
+                    def nexusRepo = readPomVersion.version.endsWith("RELEASE") ? "skan-snapshot" : "skanjob"
                     nexusArtifactUploader artifacts: [
                           [
                             artifactId: 'java-web-app',
@@ -53,7 +53,7 @@ pipeline {
                         nexusVersion: 'nexus3',
                         protocol: 'http',
                         repository: 'test-release', 
-                        version: "${mavenPom.version}"
+                        version: "${readPomVersion.version}"
                 }
             }
         }
