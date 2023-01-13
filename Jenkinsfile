@@ -57,6 +57,12 @@ pipeline {
                 }
             }
         }
+       
+      stage('deploy with ansible){
+            steps {
+            ansiblePlaybook credentialsId: 'ansiblecredential', disableHostKeyChecking: true, installation: 'Ansible', inventory: '/etc/ansible/hosts', playbook: '/etc/ansible/deployappl.yaml'
+            }      
+      }
         
         // stage('SonarQube Analysis'){
         //     steps {
