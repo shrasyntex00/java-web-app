@@ -60,7 +60,7 @@ pipeline {
        
       stage('deploy with ansible'){
             steps {
-            ansiblePlaybook credentialsId: 'ansiblecredential', disableHostKeyChecking: true, installation: 'Ansible', inventory: '/etc/ansible/hosts', playbook: '/etc/ansible/deployappl.yaml'
+            ansiblePlaybook credentialsId: 'ansiblecredential', disableHostKeyChecking: true, installation: 'Ansible', inventory: '/etc/ansible/hosts', playbook: '/etc/ansible/deployapp.yaml'
             }      
       }
         
