@@ -1,11 +1,11 @@
 pipeline {
   agent any
     environment {
-       AWS_ACCOUNT_ID= "803561623563"
-       AWS_DEFAULT_REGION="ap-south-1"
-       IMAGE_REPO_NAME= "ecrpipeline"
-       IMAGE_TAG= "latest"
-       REPOSITORY_URI= "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
+//        AWS_ACCOUNT_ID= "803561623563"
+//        AWS_DEFAULT_REGION="ap-south-1"
+//        IMAGE_REPO_NAME= "ecrpipeline"
+//        IMAGE_TAG= "latest"
+//        REPOSITORY_URI= "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
     }
     
     stages {
@@ -33,36 +33,36 @@ pipeline {
             }
         }
 
-        stage('Upload war to Nexus'){
-            steps {
-                script{                                       
-                    def readPomVersion = readMavenPom file: 'pom.xml'
-//                     def nexusRepo = readPomVersion.version.endsWith("RELEASE") ? "skan-snapshot" : "skanjob"
-                    nexusArtifactUploader artifacts: [
-                          [
-                            artifactId: 'java-web-app',
-                            classifier: '',
-                            file: "target/java-web-app-${readPomVersion.version}.war", 
-                            type: 'war'
-                          ]
-                        ], 
+//         stage('Upload war to Nexus'){
+//             steps {
+//                 script{                                       
+//                     def readPomVersion = readMavenPom file: 'pom.xml'
+// //                     def nexusRepo = readPomVersion.version.endsWith("RELEASE") ? "skan-snapshot" : "skanjob"
+//                     nexusArtifactUploader artifacts: [
+//                           [
+//                             artifactId: 'java-web-app',
+//                             classifier: '',
+//                             file: "target/java-web-app-${readPomVersion.version}.war", 
+//                             type: 'war'
+//                           ]
+//                         ], 
 
-                        credentialsId: 'Nexuscred', 
-                        groupId: 'com.mt',
-                        nexusUrl: '13.234.117.94:8081', 
-                        nexusVersion: 'nexus3',
-                        protocol: 'http',
-                        repository: 'test-release', 
-                        version: "${readPomVersion.version}"
-                }
-            }
-        }
+//                         credentialsId: 'Nexuscred', 
+//                         groupId: 'com.mt',
+//                         nexusUrl: '13.234.117.94:8081', 
+//                         nexusVersion: 'nexus3',
+//                         protocol: 'http',
+//                         repository: 'test-release', 
+//                         version: "${readPomVersion.version}"
+//                 }
+//             }
+//         }
        
-      stage('deploy with ansible'){
-            steps {
-            ansiblePlaybook credentialsId: 'ansiblecredential', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'hosts', playbook: 'appdeploy.yaml'
-            }      
-      }
+//       stage('deploy with ansible'){
+//             steps {
+//             ansiblePlaybook credentialsId: 'ansiblecredential', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'hosts', playbook: 'appdeploy.yaml'
+//             }      
+//       }
         
         // stage('SonarQube Analysis'){
         //     steps {
