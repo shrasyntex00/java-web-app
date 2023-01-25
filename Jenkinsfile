@@ -1,12 +1,12 @@
 pipeline {
   agent any
-    environment {
-//        AWS_ACCOUNT_ID= "803561623563"
-//        AWS_DEFAULT_REGION="ap-south-1"
-//        IMAGE_REPO_NAME= "ecrpipeline"
-//        IMAGE_TAG= "latest"
-//        REPOSITORY_URI= "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
-    }
+//     environment {
+// //        AWS_ACCOUNT_ID= "803561623563"
+// //        AWS_DEFAULT_REGION="ap-south-1"
+// //        IMAGE_REPO_NAME= "ecrpipeline"
+// //        IMAGE_TAG= "latest"
+// //        REPOSITORY_URI= "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
+//     }
     
     stages {
         stage('SCM Checkout') {
