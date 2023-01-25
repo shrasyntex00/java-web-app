@@ -26,6 +26,20 @@ pipeline {
         //         sh 'mvn verify -DskipUnitTests'
         //     }
         // }
+      stage('SonarQube Analysis'){
+            steps {
+                    withSonarQubeEnv(installationName: 'demoapp') {
+                      sh 'mvn sonar:sonar'
+                    }  
+                
+            }
+        }
+        
+        stage('Quality Gate Analysis'){
+            steps{
+                    waitForQualityGate abortPipeline: true 
+            }
+        }
         
         stage('Build') {
             steps {
@@ -64,20 +78,7 @@ pipeline {
 //             }      
 //       }
         
-        // stage('SonarQube Analysis'){
-        //     steps {
-        //             withSonarQubeEnv(installationName: 'sonarqubeserver') {
-        //               sh 'mvn clean package sonar:sonar'
-        //             }  
-                
-        //     }
-        // }
         
-        // stage('Quality Gate Analysis'){
-        //     steps{
-        //             waitForQualityGate abortPipeline: true 
-        //     }
-        // }
         
         // stage('push nexus artifact'){
         //     steps {
