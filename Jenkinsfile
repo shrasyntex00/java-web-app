@@ -49,6 +49,12 @@ pipeline {
               sh 'mvn clean package'
             }
         }
+      
+      stage('deploy to tomcat') {
+            steps {
+              deploy adapters: [tomcat9(credentialsId: 'tomcatcredentials', path: '', url: 'http://15.168.16.87:8080')], contextPath: 'http://15.168.16.87:8080', war: '**/*.war'
+            }
+        }
 
         stage('Upload war to Nexus'){
             steps {
@@ -74,6 +80,8 @@ pipeline {
                 }
             }
         }
+      
+      
        
 //       stage('deploy with ansible'){
 //             steps {
@@ -89,11 +97,7 @@ pipeline {
         //     }
         // }
         
-        // stage('deploy to tomcat') {
-        //     steps {
-        //       deploy adapters: [tomcat9(credentialsId: 'cefc1c4e-fdf9-4f16-921d-c6cfe67330af', path: '', url: 'http://13.232.95.30:8082/')], contextPath: null, war: '**/*.war'
-        //     }
-        // }
+        
         
         // stage('build docker image') {
         //     steps {
