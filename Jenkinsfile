@@ -39,7 +39,7 @@ pipeline {
 //         }
       
        stage('sonar Analysis') {
-            steps {
+           steps {
                 withSonarQubeEnv('Sonarqube') {
                    sh 'mvn clean verify sonar:sonar \
                     -Dsonar.projectName=demoapp \
