@@ -38,7 +38,7 @@ pipeline {
 //             }
 //         }
       
-      stage('sonar Analysis') {
+       stage('sonar Analysis') {
             steps{
                 withSonarQubeEnv('sonarqubecred') {
                    sh 'mvn clean verify sonar:sonar \
@@ -48,7 +48,6 @@ pipeline {
                     -Dsonar.host.url=http://52.200.137.65:9000'
                 }
            }
-       }
         
         stage('Quality Gate Analysis'){
             steps{
