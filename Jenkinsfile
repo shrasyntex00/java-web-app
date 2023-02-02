@@ -37,6 +37,11 @@ pipeline {
                 
 //             }
 //         }
+      stage('Build') {
+            steps {
+              sh 'mvn clean package'
+            }
+        }
       
        stage('sonar Analysis') {
            steps{
@@ -56,11 +61,7 @@ pipeline {
             }
         }
         
-        stage('Build') {
-            steps {
-              sh 'mvn clean package'
-            }
-        }
+        
       
       stage('deploy to tomcat') {
             steps {
