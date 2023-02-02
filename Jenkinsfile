@@ -43,26 +43,26 @@ pipeline {
             }
          }
       
-         stage('Upload war to Nexus'){
-            steps {
-                  nexusArtifactUploader artifacts: [
-                    [
-                      artifactId: 'java-web-app', 
-                      classifier: '', 
-                      file: 'target/java-web-app-1.0.0.war', 
-                      type: 'war'
-                    ]
+//          stage('Upload war to Nexus'){
+//             steps {
+//                   nexusArtifactUploader artifacts: [
+//                     [
+//                       artifactId: 'java-web-app', 
+//                       classifier: '', 
+//                       file: 'target/java-web-app-1.0.0.war', 
+//                       type: 'war'
+//                     ]
                     
-                    ], 
-                     credentialsId: 'nexuscredentials', 
-                     groupId: 'com.mt', 
-                     nexusUrl: '3.80.69.190:8081', 
-                     nexusVersion: 'nexus3', 
-                     protocol: 'http', 
-                     repository: 'test-release', 
-                     version: '1.0.0'
-             }    
-         }
+//                     ], 
+//                      credentialsId: 'nexuscredentials', 
+//                      groupId: 'com.mt', 
+//                      nexusUrl: '3.80.69.190:8081', 
+//                      nexusVersion: 'nexus3', 
+//                      protocol: 'http', 
+//                      repository: 'test-release', 
+//                      version: '1.0.0'
+//              }    
+//          }
       
 //        stage('sonar Analysis') {
 //            steps{
@@ -90,30 +90,30 @@ pipeline {
 //             }
 //         }
 
-//         stage('Upload war to Nexus'){
-//             steps {
-//                 script{                                       
-//                     def readPomVersion = readMavenPom file: 'pom.xml'
-// //                     def nexusRepo = readPomVersion.version.endsWith("RELEASE") ? "skan-snapshot" : "skanjob"
-//                     nexusArtifactUploader artifacts: [
-//                           [
-//                             artifactId: 'java-web-app',
-//                             classifier: '',
-//                             file: "target/java-web-app-${readPomVersion.version}.war", 
-//                             type: 'war'
-//                           ]
-//                         ], 
+        stage('Upload war to Nexus'){
+            steps {
+                script{                                       
+                    def readPomVersion = readMavenPom file: 'pom.xml'
+//                     def nexusRepo = readPomVersion.version.endsWith("RELEASE") ? "skan-snapshot" : "skanjob"
+                    nexusArtifactUploader artifacts: [
+                          [
+                            artifactId: 'java-web-app',
+                            classifier: '',
+                            file: "target/java-web-app-${readPomVersion.version}.war", 
+                            type: 'war'
+                          ]
+                        ], 
 
-//                         credentialsId: 'nexuscredentials', 
-//                         groupId: 'com.mt',
-//                         nexusUrl: '13.208.173.119:8081', 
-//                         nexusVersion: 'nexus3',
-//                         protocol: 'http',
-//                         repository: 'test-release', 
-//                         version: "${readPomVersion.version}"
-//                 }
-//             }
-//         }
+                        credentialsId: 'nexuscredentials', 
+                        groupId: 'com.mt',
+                        nexusUrl: '3.80.69.190:8081', 
+                        nexusVersion: 'nexus3',
+                        protocol: 'http',
+                        repository: 'test-release', 
+                        version: "${readPomVersion.version}"
+                }
+            }
+        }
       
       
        
