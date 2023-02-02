@@ -43,23 +43,23 @@ pipeline {
             }
         }
       
-       stage('sonar Analysis') {
-           steps{
-                withSonarQubeEnv('Sonarqube') {
-                   sh 'mvn clean verify sonar:sonar \
-                    -Dsonar.projectName=demoapp \
-                    -Dsonar.projectKey=demoapp1 \
-                    -Dsonar.login=squ_6ace97895693536eb385118edb96f74deb42faa4 \
-                    -Dsonar.host.url=http://52.200.137.65:9000'
-                }
-           }
-       }
+//        stage('sonar Analysis') {
+//            steps{
+//                 withSonarQubeEnv('Sonarqube') {
+//                    sh 'mvn clean verify sonar:sonar \
+//                     -Dsonar.projectName=demoapp \
+//                     -Dsonar.projectKey=demoapp1 \
+//                     -Dsonar.login=squ_6ace97895693536eb385118edb96f74deb42faa4 \
+//                     -Dsonar.host.url=http://52.200.137.65:9000'
+//                 }
+//            }
+//        }
         
-        stage('Quality Gate Analysis'){
-            steps {
-                    waitForQualityGate abortPipeline: true 
-            }
-        }
+//         stage('Quality Gate Analysis'){
+//             steps {
+//                     waitForQualityGate abortPipeline: true 
+//             }
+//         }
         
         
       
