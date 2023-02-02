@@ -32,7 +32,7 @@ pipeline {
       stage('SonarQube Analysis'){
             steps {
                     withSonarQubeEnv(installationName: 'sonarqubecred') {
-                      sh 'mvn sonar:sonar'
+                      sh 'mvn clean package sonar:sonar'
                     }  
                 
             }
@@ -57,7 +57,7 @@ pipeline {
         
         stage('Build') {
             steps {
-              sh 'mvn clean package'
+              sh 'mvn clean install'
             }
         }
       
