@@ -43,6 +43,26 @@ pipeline {
             }
         }
       
+      stage('Upload war to Nexus'){
+            steps{
+                nexusArtifactUploader artifacts: [
+                    [
+                        artifactId: 'java-web-app', 
+                        classifier: '', 
+                        file: 'target/java-web-app-1.0.0.war', 
+                        type: 'war'
+                    ]
+                ], 
+                credentialsId: 'nexuscredentials', 
+                groupId: 'com.mt', 
+                nexusUrl: '3.80.69.190:8081', 
+                nexusVersion: 'nexus3', 
+                protocol: 'http', 
+                repository: 'test-release', 
+                version: '1.0.0'
+            }    
+        }
+      
 //        stage('sonar Analysis') {
 //            steps{
 //                 withSonarQubeEnv('Sonarqube') {
@@ -63,11 +83,11 @@ pipeline {
         
         
       
-      stage('deploy to tomcat') {
-            steps {
-              deploy adapters: [tomcat9(credentialsId: 'tomcatcred', path: '', url: 'http://15.168.8.30:8080/')], contextPath: null, war: '**/*.war'
-            }
-        }
+//       stage('deploy to tomcat') {
+//             steps {
+//               deploy adapters: [tomcat9(credentialsId: 'tomcatcred', path: '', url: 'http://15.168.8.30:8080/')], contextPath: null, war: '**/*.war'
+//             }
+//         }
 
 //         stage('Upload war to Nexus'){
 //             steps {
