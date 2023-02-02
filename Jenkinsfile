@@ -1,7 +1,7 @@
 pipeline {
   agent any
   tools {
-    maven 'maven3.8.7'
+    maven 'maven3.6.3'
   }
 //     environment {
 // //        AWS_ACCOUNT_ID= "803561623563"
