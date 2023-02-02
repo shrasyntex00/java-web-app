@@ -39,7 +39,7 @@ pipeline {
 //         }
       
        stage('sonar Analysis') {
-            steps{
+            steps {
                 withSonarQubeEnv('Sonarqube') {
                    sh 'mvn clean verify sonar:sonar \
                     -Dsonar.projectName=demoapp \
@@ -48,16 +48,17 @@ pipeline {
                     -Dsonar.host.url=http://52.200.137.65:9000'
                 }
            }
+       }
         
         stage('Quality Gate Analysis'){
-            steps{
+            steps {
                     waitForQualityGate abortPipeline: true 
             }
         }
         
         stage('Build') {
             steps {
-              sh 'mvn clean install'
+              sh 'mvn clean package'
             }
         }
       
