@@ -29,25 +29,25 @@ pipeline {
         //         sh 'mvn verify -DskipUnitTests'
         //     }
         // }
-//       stage('SonarQube Analysis'){
-//             steps {
-//                     withSonarQubeEnv(installationName: 'sonarqubecred') {
-//                       sh 'mvn sonar:sonar'
-//                     }  
+      stage('SonarQube Analysis'){
+            steps {
+                    withSonarQubeEnv(installationName: 'sonarqubecred') {
+                      sh 'mvn sonar:sonar'
+                    }  
                 
-//             }
-//         }
+            }
+        }
       
-       stage('sonar Analysis') {
-            steps{
-                withSonarQubeEnv('sonarqubecred') {
-                   sh 'mvn clean verify sonar:sonar \
-                    -Dsonar.projectName=java-web-app \
-                    -Dsonar.projectKey=demoapp \
-                    -Dsonar.login=squ_6ace97895693536eb385118edb96f74deb42faa4 \
-                    -Dsonar.host.url=http://52.200.137.65:9000'
-                }
-           }
+//        stage('sonar Analysis') {
+//             steps{
+//                 withSonarQubeEnv('sonarqubecred') {
+//                    sh 'mvn clean verify sonar:sonar \
+//                     -Dsonar.projectName=java-web-app \
+//                     -Dsonar.projectKey=demoapp \
+//                     -Dsonar.login=squ_6ace97895693536eb385118edb96f74deb42faa4 \
+//                     -Dsonar.host.url=http://52.200.137.65:9000'
+//                 }
+//            }
         
         stage('Quality Gate Analysis'){
             steps{
