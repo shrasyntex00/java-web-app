@@ -1,15 +1,15 @@
 pipeline {
-  agent any
-  tools {
-    maven 'maven3.6.3'
-  }
-//     environment {
-// //        AWS_ACCOUNT_ID= "803561623563"
-// //        AWS_DEFAULT_REGION="ap-south-1"
-// //        IMAGE_REPO_NAME= "ecrpipeline"
-// //        IMAGE_TAG= "latest"
-// //        REPOSITORY_URI= "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
-//     }
+    agent any
+    tools {
+        maven 'maven3.6.3'
+    }
+    // environment {
+    //     AWS_ACCOUNT_ID= "803561623563"
+    //     AWS_DEFAULT_REGION="ap-south-1"
+    //     IMAGE_REPO_NAME= "ecrpipeline"
+    //     IMAGE_TAG= "latest"
+    //     REPOSITORY_URI= "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
+    // }
     
     stages {
         stage('SCM Checkout') {
@@ -29,66 +29,64 @@ pipeline {
         //         sh 'mvn verify -DskipUnitTests'
         //     }
         // }
-      stage('SonarQube Analysis'){
+        stage('SonarQube Analysis'){
             steps {
-                    withSonarQubeEnv(installationName: 'sonarqubecred') {
-                      sh 'mvn sonar:sonar'
-                    }  
+                withSonarQubeEnv(installationName: 'sonarqubecred') {
+                sh 'mvn sonar:sonar'
+                }  
             }
         }
       
-         stage('Build') {
+        stage('Build') {
             steps {
-              sh 'mvn clean package'
+                sh 'mvn clean package'
             }
-         }
+        }
       
-//          stage('Upload war to Nexus'){
-//             steps {
-//                   nexusArtifactUploader artifacts: [
-//                     [
-//                       artifactId: 'java-web-app', 
-//                       classifier: '', 
-//                       file: 'target/java-web-app-1.0.0.war', 
-//                       type: 'war'
-//                     ]
-                    
-//                     ], 
-//                      credentialsId: 'nexuscredentials', 
-//                      groupId: 'com.mt', 
-//                      nexusUrl: '3.80.69.190:8081', 
-//                      nexusVersion: 'nexus3', 
-//                      protocol: 'http', 
-//                      repository: 'test-release', 
-//                      version: '1.0.0'
-//              }    
-//          }
+        // stage('Upload war to Nexus'){
+        //     steps {
+        //         nexusArtifactUploader artifacts: [
+        //         [
+        //             artifactId: 'java-web-app', 
+        //             classifier: '', 
+        //             file: 'target/java-web-app-1.0.0.war', 
+        //             type: 'war'
+        //         ]
+            
+        //         ], 
+        //             credentialsId: 'nexuscredentials', 
+        //             groupId: 'com.mt', 
+        //             nexusUrl: '3.80.69.190:8081', 
+        //             nexusVersion: 'nexus3', 
+        //             protocol: 'http', 
+        //             repository: 'test-release', 
+        //             version: '1.0.0'
+        //     }    
+        // }
       
-//        stage('sonar Analysis') {
-//            steps{
-//                 withSonarQubeEnv('Sonarqube') {
-//                    sh 'mvn clean verify sonar:sonar \
-//                     -Dsonar.projectName=demoapp \
-//                     -Dsonar.projectKey=demoapp1 \
-//                     -Dsonar.login=squ_6ace97895693536eb385118edb96f74deb42faa4 \
-//                     -Dsonar.host.url=http://52.200.137.65:9000'
-//                 }
-//            }
-//        }
-        
-//         stage('Quality Gate Analysis'){
-//             steps {
-//                     waitForQualityGate abortPipeline: true 
-//             }
-//         }
-        
-        
-      
-//       stage('deploy to tomcat') {
-//             steps {
-//               deploy adapters: [tomcat9(credentialsId: 'tomcatcred', path: '', url: 'http://15.168.8.30:8080/')], contextPath: null, war: '**/*.war'
-//             }
-//         }
+        stage('sonar Analysis') {
+            steps{
+                withSonarQubeEnv('Sonarqube') {
+                sh 'mvn clean verify sonar:sonar \
+                    -Dsonar.projectName=demoapp \
+                    -Dsonar.projectKey=demoapp1 \
+                    -Dsonar.login=squ_6ace97895693536eb385118edb96f74deb42faa4 \
+                    -Dsonar.host.url=http://52.200.137.65:9000'
+                }
+            }
+        }
+            
+        stage('Quality Gate Analysis'){
+            steps {
+                waitForQualityGate abortPipeline: true 
+            }
+        }
+
+        // stage('deploy to tomcat') {
+        //     steps {
+        //     deploy adapters: [tomcat9(credentialsId: 'tomcatcred', path: '', url: 'http://15.168.8.30:8080/')], contextPath: null, war: '**/*.war'
+        //     }
+        // }
 
         stage('Upload war to Nexus'){
             steps {
@@ -114,25 +112,19 @@ pipeline {
                 }
             }
         }
-      
-      
-       
-//       stage('deploy with ansible'){
-//             steps {
-//             ansiblePlaybook credentialsId: 'ansiblecredential', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'hosts', playbook: 'appdeploy.yaml'
-//             }      
-//       }
-        
-        
-        
+
+        stage('deploy with ansible'){
+            steps {
+            ansiblePlaybook credentialsId: 'ansiblecredential', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'hosts', playbook: 'appdeploy.yaml'
+            }      
+        }
+
         // stage('push nexus artifact'){
         //     steps {
         //         sh 'mvn clean deploy'
         //     }
         // }
-        
-        
-        
+
         // stage('build docker image') {
         //     steps {
         //         script{
@@ -177,4 +169,3 @@ pipeline {
         // }
     }
 }
- 
