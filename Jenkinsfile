@@ -113,11 +113,11 @@ pipeline {
             }
         }
 
-        stage('deploy with ansible'){
-            steps {
-            ansiblePlaybook credentialsId: 'ansiblecredential', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'hosts', playbook: 'appdeploy.yaml'
-            }      
-        }
+        //  stage('deploy with ansible'){
+        //     steps {
+        //         ansiblePlaybook credentialsId: 'ansiblecredential', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'hosts', playbook: 'appdeploy.yaml'
+//             }      
+//         }
 
         // stage('push nexus artifact'){
         //     steps {
