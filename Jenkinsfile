@@ -29,13 +29,13 @@ pipeline {
         //         sh 'mvn verify -DskipUnitTests'
         //     }
         // }
-        stage('SonarQube Analysis'){
-            steps {
-                withSonarQubeEnv(installationName: 'sonarcred') {
-                sh 'mvn sonar:sonar'
-                }  
-            }
-        }
+//         stage('SonarQube Analysis'){
+//             steps {
+//                 withSonarQubeEnv(installationName: 'sonarcred') {
+//                 sh 'mvn sonar:sonar'
+//                 }  
+//             }
+//         }
       
         stage('Build') {
             steps {
