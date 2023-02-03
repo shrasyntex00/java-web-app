@@ -106,7 +106,7 @@ pipeline {
 
                         credentialsId: 'nexuscredentials', 
                         groupId: 'com.mt',
-                        nexusUrl: '3.80.69.190:8081', 
+                        nexusUrl: '54.164.112.132:8081', 
                         nexusVersion: 'nexus3',
                         protocol: 'http',
                         repository: 'test-release', 
