@@ -29,14 +29,14 @@ pipeline {
         //         sh 'mvn verify -DskipUnitTests'
         //     }
         // }
-//       stage('SonarQube Analysis'){
-//             steps {
-//                     withSonarQubeEnv(installationName: 'sonarqubecred') {
-//                       sh 'mvn clean package sonar:sonar'
-//                     }  
-                
-//             }
-//         }
+      stage('SonarQube Analysis'){
+            steps {
+                    withSonarQubeEnv(installationName: 'sonarqubecred') {
+                      sh 'mvn sonar:sonar'
+                    }  
+            }
+        }
+      
          stage('Build') {
             steps {
               sh 'mvn clean package'
