@@ -81,6 +81,12 @@ pipeline {
 //                 waitForQualityGate abortPipeline: true 
 //             }
 //         }
+        
+        stage('push nexus artifact'){
+            steps {
+                sh 'mvn clean deploy'
+            }
+        }
 
         // stage('deploy to tomcat') {
         //     steps {
@@ -88,30 +94,30 @@ pipeline {
         //     }
         // }
 
-        stage('Upload war to Nexus'){
-            steps {
-                script{                                       
-                    def readPomVersion = readMavenPom file: 'pom.xml'
-//                     def nexusRepo = readPomVersion.version.endsWith("RELEASE") ? "skan-snapshot" : "skanjob"
-                    nexusArtifactUploader artifacts: [
-                          [
-                            artifactId: 'java-web-app',
-                            classifier: '',
-                            file: "target/java-web-app-${readPomVersion.version}.war", 
-                            type: 'war'
-                          ]
-                        ], 
+//         stage('Upload war to Nexus'){
+//             steps {
+//                 script{                                       
+//                     def readPomVersion = readMavenPom file: 'pom.xml'
+// //                     def nexusRepo = readPomVersion.version.endsWith("RELEASE") ? "skan-snapshot" : "skanjob"
+//                     nexusArtifactUploader artifacts: [
+//                           [
+//                             artifactId: 'java-web-app',
+//                             classifier: '',
+//                             file: "target/java-web-app-${readPomVersion.version}.war", 
+//                             type: 'war'
+//                           ]
+//                         ], 
 
-                        credentialsId: 'nexuscredentials', 
-                        groupId: 'com.mt',
-                        nexusUrl: '54.164.112.132:8081', 
-                        nexusVersion: 'nexus3',
-                        protocol: 'http',
-                        repository: 'test-release', 
-                        version: "${readPomVersion.version}"
-                }
-            }
-        }
+//                         credentialsId: 'nexuscredentials', 
+//                         groupId: 'com.mt',
+//                         nexusUrl: '54.164.112.132:8081', 
+//                         nexusVersion: 'nexus3',
+//                         protocol: 'http',
+//                         repository: 'test-release', 
+//                         version: "${readPomVersion.version}"
+//                 }
+//             }
+//         }
 
         //  stage('deploy with ansible'){
         //     steps {
@@ -119,11 +125,7 @@ pipeline {
 //             }      
 //         }
 
-        // stage('push nexus artifact'){
-        //     steps {
-        //         sh 'mvn clean deploy'
-        //     }
-        // }
+        
 
         // stage('build docker image') {
         //     steps {
