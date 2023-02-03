@@ -29,13 +29,13 @@ pipeline {
         //         sh 'mvn verify -DskipUnitTests'
         //     }
         // }
-        stage('SonarQube Analysis'){
-            steps {
-                withSonarQubeEnv(installationName: 'sonarqubecred') {
-                sh 'mvn sonar:sonar'
-                }  
-            }
-        }
+//         stage('SonarQube Analysis'){
+//             steps {
+//                 withSonarQubeEnv(installationName: 'sonarqubecred') {
+//                 sh 'mvn sonar:sonar'
+//                 }  
+//             }
+//         }
       
         stage('Build') {
             steps {
@@ -43,44 +43,44 @@ pipeline {
             }
         }
       
-        // stage('Upload war to Nexus'){
-        //     steps {
-        //         nexusArtifactUploader artifacts: [
-        //         [
-        //             artifactId: 'java-web-app', 
-        //             classifier: '', 
-        //             file: 'target/java-web-app-1.0.0.war', 
-        //             type: 'war'
-        //         ]
+//         stage('Upload war to Nexus'){
+//             steps {
+//                 nexusArtifactUploader artifacts: [
+//                 [
+//                     artifactId: 'java-web-app', 
+//                     classifier: '', 
+//                     file: 'target/java-web-app-1.0.0.war', 
+//                     type: 'war'
+//                 ]
             
-        //         ], 
-        //             credentialsId: 'nexuscredentials', 
-        //             groupId: 'com.mt', 
-        //             nexusUrl: '3.80.69.190:8081', 
-        //             nexusVersion: 'nexus3', 
-        //             protocol: 'http', 
-        //             repository: 'test-release', 
-        //             version: '1.0.0'
-        //     }    
-        // }
+//                 ], 
+//                     credentialsId: 'nexuscredentials', 
+//                     groupId: 'com.mt', 
+//                     nexusUrl: '3.80.69.190:8081', 
+//                     nexusVersion: 'nexus3', 
+//                     protocol: 'http', 
+//                     repository: 'test-release', 
+//                     version: '1.0.0'
+//             }    
+//         }
       
-        stage('sonar Analysis') {
-            steps{
-                withSonarQubeEnv('Sonarqube') {
-                sh 'mvn clean verify sonar:sonar \
-                    -Dsonar.projectName=demoapp \
-                    -Dsonar.projectKey=demoapp1 \
-                    -Dsonar.login=squ_6ace97895693536eb385118edb96f74deb42faa4 \
-                    -Dsonar.host.url=http://52.200.137.65:9000'
-                }
-            }
-        }
+//         stage('sonar Analysis') {
+//             steps{
+//                 withSonarQubeEnv('Sonarqube') {
+//                 sh 'mvn clean verify sonar:sonar \
+//                     -Dsonar.projectName=demoapp \
+//                     -Dsonar.projectKey=demoapp1 \
+//                     -Dsonar.login=squ_6ace97895693536eb385118edb96f74deb42faa4 \
+//                     -Dsonar.host.url=http://52.200.137.65:9000'
+//                 }
+//             }
+//         }
             
-        stage('Quality Gate Analysis'){
-            steps {
-                waitForQualityGate abortPipeline: true 
-            }
-        }
+//         stage('Quality Gate Analysis'){
+//             steps {
+//                 waitForQualityGate abortPipeline: true 
+//             }
+//         }
 
         // stage('deploy to tomcat') {
         //     steps {
