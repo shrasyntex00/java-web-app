@@ -101,7 +101,7 @@
 	    <repository>
 	      <id>nexus</id>
 	      <name>java-web-app</name>
-	      <url>http://54.164.112.132:8081/repository/test-release/</url>
+	      <url>http://54.82.86.48:8081/repository/test-release/</url>
 	    </repository>
 	    <snapshotRepository>
 	      <id>nexus</id>
