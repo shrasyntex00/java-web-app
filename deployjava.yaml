@@ -1,5 +1,5 @@
 ---
-- host: tomcat
+- hosts: tomcat
   become: true
   tasks:
     - name: Download war file
