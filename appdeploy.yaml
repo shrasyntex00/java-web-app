@@ -1,8 +1,21 @@
 ---
-- hosts: tomcat
-  become: true
-  tasks:
-    - name: Deploy in tomcat
-      copy:
-        src: /var/lib/jenkins/workspace/demoapplication/target/java-web-app-2.0.0.war
-        dest: /home/ubuntu/tomcat/webapps
+# - hosts: tomcat
+#   become: true
+#   tasks:
+#     - name: Deploy in tomcat
+#       copy:
+#         src: /var/lib/jenkins/workspace/demoapplication/target/java-web-app-2.0.0.war
+#         dest: /home/ubuntu/tomcat/webapps
+
+- name: play1
+  hosts: tomcat
+  become: yes
+  tasks:
+    - name: copying file to tomcat server
+      copy:
+        src: /var/lib/jenkins/workspace/jfrog_download/target/{{ version }}/jenkins-git-integration.war
+        dest: /opt/apache-tomcat-9.0.71/webapps/
+      notify: "Restart tomcat"   handlers:
+    - name: "Restart tomcat"
+      shell: tomcatdown
+      shell: tomcatup
