@@ -3,13 +3,13 @@ pipeline {
     tools {
         maven 'MAVEN'
     }
-    // environment {
-    //     AWS_ACCOUNT_ID= "803561623563"
-    //     AWS_DEFAULT_REGION="ap-south-1"
-    //     IMAGE_REPO_NAME= "ecrpipeline"
-    //     IMAGE_TAG= "latest"
-    //     REPOSITORY_URI= "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
-    // }
+//     environment {
+//         AWS_ACCOUNT_ID= "803561623563"
+//         AWS_DEFAULT_REGION="ap-south-1"
+//         IMAGE_REPO_NAME= "ecrpipeline"
+//         IMAGE_TAG= "latest"
+//         REPOSITORY_URI= "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"
+//     }
     
     stages {
         stage('SCM Checkout') {
@@ -127,36 +127,36 @@ pipeline {
 
         
 
-        // stage('build docker image') {
-        //     steps {
-        //         script{
-        //             dockerImage = docker.build "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
-        //         }
-        //     }
-        // }
+//         stage('build docker image') {
+//             steps {
+//                 script{
+//                     dockerImage = docker.build "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+//                 }
+//             }
+//         }
 
-        // stage('DockerHUB LOGIN & push image') {
-        //     steps {
-        //         withCredentials([string(credentialsId: 'dockerhub-credentials', variable: 'dockerhubcredentials')]) {
-        //             sh "docker login -u account1996 -p ${dockerhubcredentials}"  
-        //         }
-        //             sh 'docker push account1996/java:1'
-      	//   }
-        // }
+//         stage('DockerHUB LOGIN & push image') {
+//             steps {
+//                 withCredentials([string(credentialsId: 'dockerhub-credentials', variable: 'dockerhubcredentials')]) {
+//                     sh "docker login -u account1996 -p ${dockerhubcredentials}"  
+//                 }
+//                     sh 'docker push account1996/java:1'
+//       	  }
+//         }
         
-        // stage('Loggingto AWS ECR') {
-        //     steps {
-        //         sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 803561623563.dkr.ecr.ap-south-1.amazonaws.com"
-        //     }
-        // }
+//         stage('Loggingto AWS ECR') {
+//             steps {
+//                 sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 803561623563.dkr.ecr.ap-south-1.amazonaws.com"
+//             }
+//         }
         
-        // stage('Pushingto ECR') {
-        //   steps{
-        //        sh "docker build -t ecrpipeline ."
-        //        sh "docker tag ecrpipeline:latest 803561623563.dkr.ecr.ap-south-1.amazonaws.com/ecrpipeline:latest"
-        //        sh "docker push 803561623563.dkr.ecr.ap-south-1.amazonaws.com/ecrpipeline:latest"
-        //     }
-        // }
+//         stage('Pushingto ECR') {
+//           steps{
+//                sh "docker build -t ecrpipeline ."
+//                sh "docker tag ecrpipeline:latest 803561623563.dkr.ecr.ap-south-1.amazonaws.com/ecrpipeline:latest"
+//                sh "docker push 803561623563.dkr.ecr.ap-south-1.amazonaws.com/ecrpipeline:latest"
+//             }
+//         }
         
         // stage('K8S Deploy'){
         //     steps{
