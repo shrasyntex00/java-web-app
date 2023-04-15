@@ -36,7 +36,11 @@ pipeline {
 //                 }  
 //             }
 //         }
-      
+        stage('clean and install'){
+            steps {
+               sh 'mvn clean install'
+            }
+        }
         stage('Build') {
             steps {
                 sh 'mvn clean package'
@@ -82,11 +86,11 @@ pipeline {
 //             }
 //         }
         
-        stage('push nexus artifact'){
-            steps {
-                sh 'mvn clean deploy'
-            }
-        }
+//         stage('push nexus artifact'){
+//             steps {
+//                 sh 'mvn clean deploy'
+//             }
+//         }
 
         // stage('deploy to tomcat') {
         //     steps {
@@ -119,11 +123,11 @@ pipeline {
 //             }
 //         }
 
-         stage('deploy with ansible'){
-            steps {
-                ansiblePlaybook credentialsId: 'ansiblecredentials', disableHostKeyChecking: true, installation: 'ansible', inventory: 'hosts.inv', playbook: 'deployjava.yaml'
-            }      
-        }
+//          stage('deploy with ansible'){
+//             steps {
+//                 ansiblePlaybook credentialsId: 'ansiblecredentials', disableHostKeyChecking: true, installation: 'ansible', inventory: 'hosts.inv', playbook: 'deployjava.yaml'
+//             }      
+//         }
 
         
 
