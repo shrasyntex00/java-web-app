@@ -36,11 +36,11 @@ pipeline {
 //                 }  
 //             }
 //         }
-        stage('clean and install'){
-            steps {
-               sh 'mvn clean install'
-            }
-        }
+//         stage('clean and install'){
+//             steps {
+//                sh 'mvn clean install'
+//             }
+//         }
         stage('Build') {
             steps {
                 sh 'mvn clean package'
